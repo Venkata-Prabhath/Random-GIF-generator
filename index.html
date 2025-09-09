@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Meme Generator</title>
+    <style>
+        body{
+            background-color: #2c292c;
+        }
+        #root{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #meme{
+            height: 500px;
+        }
+        button{
+            font-size: 30px;
+            padding: 10px 8px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: whitesmoke;
+            background: linear-gradient(45deg,#52c234,#061700);
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <img id="meme" />
+        <button onclick="fetchAPI()">Load new-GIF</button>
+    </div>
+</body>
+    <script>
+        function fetchAPI() {
+            fetch("https://meme-api.com/gimme").then(data => {
+                if(!data.ok) throw new Error("Not comming Error occured!")
+                return data.json();
+            }).then(data => {
+                const imageElement = document.getElementById("meme");
+                imageElement.setAttribute("src",data.url);
+            }).catch((error) => {
+                alert("Internal issues");
+                fetchAPI();
+            }); 
+        }
+    </script>
+</html>
